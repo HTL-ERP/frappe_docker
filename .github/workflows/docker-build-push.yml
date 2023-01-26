@@ -44,10 +44,14 @@ jobs:
 
       - name: Build
         uses: docker/bake-action@v2.3.0
+        env:
+          APPS_JSON: '[ { "url": "https://github.com/frappe/payments", "branch": "develop" }, { "url": "https://github.com/frappe/erpnext", "branch": "version-14" }, { "url": "https://github.com/frappe/lms", "branch": "main" }, { "url": "https://github.com/frappe/chat", "branch": "main" }, { "url": "https://github.com/yrestom/POS-Awesome", "branch": "version-14" } ]'
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          IMAGE_NAME: tpp-erpnext
+          REGISTRY_NAME: hieutrluu
+          VERSION: v0.0.1
         with:
           push: true
-        env:
-          REGISTRY_USER: localhost:5000/frappe
 
       - name: Setup Python
         uses: actions/setup-python@v4
