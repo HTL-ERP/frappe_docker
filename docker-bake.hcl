@@ -5,6 +5,10 @@ variable "REGISTRY_USER" {
     default = "hieutrluu"
 }
 
+variable "TAG" {
+    default = "latest"
+}
+
 variable "FRAPPE_VERSION" {
     default = "develop"
 }
@@ -74,5 +78,5 @@ target "erpnext" {
     inherits = ["default-args"]
     context = "."
     dockerfile = "images/custom/Containerfile"
-    tags = tag("tpp-erpnext", "v0.0.1")
+    tags = tag("tpp-erpnext", "${TAG}")
 }
