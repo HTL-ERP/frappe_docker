@@ -2,7 +2,7 @@
 # Reference: https://github.com/docker/buildx/blob/master/docs/reference/buildx_bake.md
 
 variable "REGISTRY_USER" {
-    default = "frappe"
+    default = "hieutrluu"
 }
 
 variable "FRAPPE_VERSION" {
@@ -73,7 +73,6 @@ target "default-args" {
 target "erpnext" {
     inherits = ["default-args"]
     context = "."
-    dockerfile = "images/production/Containerfile"
-    target = "erpnext"
-    tags = tag("erpnext", "${ERPNEXT_VERSION}")
+    dockerfile = "images/custom/Containerfile"
+    tags = tag("tpp-erpnext", "v0.0.1")
 }
