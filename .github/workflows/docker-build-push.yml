@@ -1,6 +1,9 @@
 name: Build
 
 on:
+  push:
+    tags:        
+      - 'v*.*.*'           # Push events to every tag not containing /
   workflow_call:
     inputs:
       repo:
@@ -50,6 +53,7 @@ jobs:
           IMAGE_NAME: tpp-erpnext
           REGISTRY_NAME: hieutrluu
           VERSION: v0.0.1
+          REGISTRY_USER: localhost:5000/hieutrluu
         with:
           push: true
 
