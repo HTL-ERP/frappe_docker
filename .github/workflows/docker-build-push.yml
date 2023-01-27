@@ -52,13 +52,17 @@ jobs:
         with:
           driver-opts: network=host
 
-      # - name: Get latest versions
-      #   run: python3 ./.github/scripts/get_latest_tags.py --repo ${{ inputs.repo }} --version ${{ inputs.version }}
+      - name: Echo version of get-meta
+        run: |
+          echo ${TAG}
+          echo "::set-env name=APPS_JSON_BASE64::$(echo ${APPS_JSON} | base64 --wrap=0)"
+        env:
+          APPS_JSON: '[ { "url": "https://github.com/frappe/payments", "branch": "develop" }, { "url": "https://github.com/frappe/erpnext", "branch": "version-14" }, { "url": "https://github.com/frappe/lms", "branch": "main" }, { "url": "https://github.com/frappe/chat", "branch": "main" }, { "url": "https://github.com/yrestom/POS-Awesome", "branch": "version-14" }, { "url": "https://hieutrluu:${PERSONAL_ACCESS_TOKEN}@github.com/htl-digitalization/tpp_custom", "branch": "main" }, { "url": "https://hieutrluu:${PERSONAL_ACCESS_TOKEN}@github.com/htl-digitalization/tpp_manufacturing", "branch": "main" } ]'
+          TAG: ${{ steps.git-meta.outputs.SOURCE_TAG }}
 
       - name: Build
         uses: docker/bake-action@v2.3.0
         env:
-          APPS_JSON: '[ { "url": "https://github.com/frappe/payments", "branch": "develop" }, { "url": "https://github.com/frappe/erpnext", "branch": "version-14" }, { "url": "https://github.com/frappe/lms", "branch": "main" }, { "url": "https://github.com/frappe/chat", "branch": "main" }, { "url": "https://github.com/yrestom/POS-Awesome", "branch": "version-14" }, { "url": "https://hieutrluu:${PERSONAL_ACCESS_TOKEN}@github.com/htl-digitalization/tpp_custom", "branch": "main" }, { "url": "https://hieutrluu:${PERSONAL_ACCESS_TOKEN}@github.com/htl-digitalization/tpp_manufacturing", "branch": "main" } ]'
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           TAG: ${{ steps.git-meta.outputs.SOURCE_TAG }}
           IMAGE_NAME: tpp-erpnext
@@ -66,6 +70,9 @@ jobs:
           REGISTRY_USER: localhost:5000/hieutrluu
         with:
           push: true
+          context: .
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       # - name: Setup Python
       #   uses: actions/setup-python@v4
