@@ -46,6 +46,7 @@ jobs:
           echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
           echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+          echo ::set-output name=ENCODE_BASE64::${test123123123123 | base64 --wrap=0}
 
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v2
@@ -58,20 +59,20 @@ jobs:
         env:
           TAG: ${{ steps.git-meta.outputs.SOURCE_TAG }}
 
-      - name: Build
-        uses: docker/bake-action@v2.3.0
-        env:
-          APPS_JSON_BASE64: WyB7ICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9wYXltZW50cyIsICJicmFuY2giOiAiZGV2ZWxvcCIgfSwgeyAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9mcmFwcGUvZXJwbmV4dCIsICJicmFuY2giOiAidmVyc2lvbi0xNCIgfSwgeyAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9mcmFwcGUvbG1zIiwgImJyYW5jaCI6ICJtYWluIiB9LCB7ICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9jaGF0IiwgImJyYW5jaCI6ICJtYWluIiB9LCB7ICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3lyZXN0b20vUE9TLUF3ZXNvbWUiLCAiYnJhbmNoIjogInZlcnNpb24tMTQiIH0sIHsgInVybCI6ICJodHRwczovL2hpZXV0cmx1dToke1BFUlNPTkFMX0FDQ0VTU19UT0tFTn1AZ2l0aHViLmNvbS9odGwtZGlnaXRhbGl6YXRpb24vdHBwX2N1c3RvbSIsICJicmFuY2giOiAibWFpbiIgfSwgeyAidXJsIjogImh0dHBzOi8vaGlldXRybHV1OiR7UEVSU09OQUxfQUNDRVNTX1RPS0VOfUBnaXRodWIuY29tL2h0bC1kaWdpdGFsaXphdGlvbi90cHBfbWFudWZhY3R1cmluZyIsICJicmFuY2giOiAibWFpbiIgfSBdCg==
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          TAG: ${{ steps.git-meta.outputs.SOURCE_TAG }}
-          IMAGE_NAME: tpp-erpnext
-          REGISTRY_NAME: hieutrluu
-          REGISTRY_USER: localhost:5000/hieutrluu
-        with:
-          push: true
-          context: .
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+      # - name: Build
+      #   uses: docker/bake-action@v2.3.0
+      #   env:
+      #     APPS_JSON_BASE64: WyB7ICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9wYXltZW50cyIsICJicmFuY2giOiAiZGV2ZWxvcCIgfSwgeyAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9mcmFwcGUvZXJwbmV4dCIsICJicmFuY2giOiAidmVyc2lvbi0xNCIgfSwgeyAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9mcmFwcGUvbG1zIiwgImJyYW5jaCI6ICJtYWluIiB9LCB7ICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9jaGF0IiwgImJyYW5jaCI6ICJtYWluIiB9LCB7ICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3lyZXN0b20vUE9TLUF3ZXNvbWUiLCAiYnJhbmNoIjogInZlcnNpb24tMTQiIH0sIHsgInVybCI6ICJodHRwczovL2hpZXV0cmx1dToke1BFUlNPTkFMX0FDQ0VTU19UT0tFTn1AZ2l0aHViLmNvbS9odGwtZGlnaXRhbGl6YXRpb24vdHBwX2N1c3RvbSIsICJicmFuY2giOiAibWFpbiIgfSwgeyAidXJsIjogImh0dHBzOi8vaGlldXRybHV1OiR7UEVSU09OQUxfQUNDRVNTX1RPS0VOfUBnaXRodWIuY29tL2h0bC1kaWdpdGFsaXphdGlvbi90cHBfbWFudWZhY3R1cmluZyIsICJicmFuY2giOiAibWFpbiIgfSBdCg==
+      #     PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      #     TAG: ${{ steps.git-meta.outputs.SOURCE_TAG }}
+      #     IMAGE_NAME: tpp-erpnext
+      #     REGISTRY_NAME: hieutrluu
+      #     REGISTRY_USER: localhost:5000/hieutrluu
+      #   with:
+      #     push: true
+      #     context: .
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
 
       # - name: Setup Python
       #   uses: actions/setup-python@v4
