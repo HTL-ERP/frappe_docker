@@ -55,14 +55,13 @@ jobs:
       - name: Echo version of get-meta
         run: |
           echo ${TAG}
-          echo "::set-env name=APPS_JSON_BASE64::$(echo ${APPS_JSON} | base64 --wrap=0)"
         env:
-          APPS_JSON: '[ { "url": "https://github.com/frappe/payments", "branch": "develop" }, { "url": "https://github.com/frappe/erpnext", "branch": "version-14" }, { "url": "https://github.com/frappe/lms", "branch": "main" }, { "url": "https://github.com/frappe/chat", "branch": "main" }, { "url": "https://github.com/yrestom/POS-Awesome", "branch": "version-14" }, { "url": "https://hieutrluu:${PERSONAL_ACCESS_TOKEN}@github.com/htl-digitalization/tpp_custom", "branch": "main" }, { "url": "https://hieutrluu:${PERSONAL_ACCESS_TOKEN}@github.com/htl-digitalization/tpp_manufacturing", "branch": "main" } ]'
           TAG: ${{ steps.git-meta.outputs.SOURCE_TAG }}
 
       - name: Build
         uses: docker/bake-action@v2.3.0
         env:
+          APPS_JSON_BASE64: WyB7ICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9wYXltZW50cyIsICJicmFuY2giOiAiZGV2ZWxvcCIgfSwgeyAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9mcmFwcGUvZXJwbmV4dCIsICJicmFuY2giOiAidmVyc2lvbi0xNCIgfSwgeyAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9mcmFwcGUvbG1zIiwgImJyYW5jaCI6ICJtYWluIiB9LCB7ICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9jaGF0IiwgImJyYW5jaCI6ICJtYWluIiB9LCB7ICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3lyZXN0b20vUE9TLUF3ZXNvbWUiLCAiYnJhbmNoIjogInZlcnNpb24tMTQiIH0sIHsgInVybCI6ICJodHRwczovL2hpZXV0cmx1dToke1BFUlNPTkFMX0FDQ0VTU19UT0tFTn1AZ2l0aHViLmNvbS9odGwtZGlnaXRhbGl6YXRpb24vdHBwX2N1c3RvbSIsICJicmFuY2giOiAibWFpbiIgfSwgeyAidXJsIjogImh0dHBzOi8vaGlldXRybHV1OiR7UEVSU09OQUxfQUNDRVNTX1RPS0VOfUBnaXRodWIuY29tL2h0bC1kaWdpdGFsaXphdGlvbi90cHBfbWFudWZhY3R1cmluZyIsICJicmFuY2giOiAibWFpbiIgfSBdCg==
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           TAG: ${{ steps.git-meta.outputs.SOURCE_TAG }}
           IMAGE_NAME: tpp-erpnext
