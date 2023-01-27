@@ -5,8 +5,12 @@ variable "REGISTRY_USER" {
     default = "hieutrluu"
 }
 
+variable "APPS_JSON_BASE64" {
+        
+}
+
 variable "TAG" {
-    default = "latest"
+
 }
 
 variable "FRAPPE_VERSION" {
@@ -79,4 +83,7 @@ target "erpnext" {
     context = "."
     dockerfile = "images/custom/Containerfile"
     tags = tag("tpp-erpnext", "${TAG}")
+    args = {
+        APPS_JSON_BASE64="${APPS_JSON_BASE64}"
+    }
 }
