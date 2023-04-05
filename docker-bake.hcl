@@ -33,6 +33,10 @@ variable "CUSTOM_VERSION" {
     default = "latest-test"
 }
 
+variable "CUSTOM_REPO_REGISTRY" {
+    default = "frappe"
+}
+
 variable "APPS_JSON_BASE64" {
     default = "WwogIHsKICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9wYXltZW50cyIsCiAgICAiYnJhbmNoIjogImRldmVsb3AiCiAgfSwKICB7CiAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9mcmFwcGUvZXJwbmV4dCIsCiAgICAiYnJhbmNoIjogInZlcnNpb24tMTQiCiAgfQpdCg=="
 }
