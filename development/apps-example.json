@@ -4,7 +4,11 @@
       "name": "frappe",
       "branch": "develop",
       "upstream": "git@github.com:frappe/frappe.git",
-      "fork": "[your fork]"
+    },
+    {
+      "name": "payments",
+      "branch": "version-14",
+      "upstream": "git@github.com:frappe/erpnext.git"
     },
     {
       "name": "erpnext",

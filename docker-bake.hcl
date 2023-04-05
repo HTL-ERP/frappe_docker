@@ -6,11 +6,11 @@ variable "REGISTRY_USER" {
 }
 
 variable "FRAPPE_VERSION" {
-    default = "develop"
+    default = "version-14"
 }
 
 variable "ERPNEXT_VERSION" {
-    default = "develop"
+    default = "version-14"
 }
 
 variable "FRAPPE_REPO" {
@@ -23,6 +23,18 @@ variable "ERPNEXT_REPO" {
 
 variable "BENCH_REPO" {
     default = "https://github.com/frappe/bench"
+}
+
+variable "BUILD_TARGET" {
+    default = "erpnext"
+}
+
+variable "CUSTOM_VERSION" {
+    default = "latest-test"
+}
+
+variable "APPS_JSON_BASE64" {
+    default = "WwogIHsKICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL2ZyYXBwZS9wYXltZW50cyIsCiAgICAiYnJhbmNoIjogImRldmVsb3AiCiAgfSwKICB7CiAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9mcmFwcGUvZXJwbmV4dCIsCiAgICAiYnJhbmNoIjogInZlcnNpb24tMTQiCiAgfQpdCg=="
 }
 
 # Bench image
@@ -45,7 +57,7 @@ target "bench-test" {
 # Base for all other targets
 
 group "default" {
-    targets = ["erpnext"]
+    targets = ["${BUILD_TARGET}"]
 }
 
 function "tag" {
@@ -76,4 +88,16 @@ target "erpnext" {
     dockerfile = "images/production/Containerfile"
     target = "erpnext"
     tags = tag("erpnext", "${ERPNEXT_VERSION}")
+}
+
+
+target "custom" {
+    args = {
+        APPS_JSON_BASE64="${APPS_JSON_BASE64}"
+    }
+    inherits = ["default-args"]    
+    context = "."
+    dockerfile = "images/custom/Containerfile"
+    target = "builder"
+    tags = tag("frappe_custom", "${CUSTOM_VERSION}")
 }
