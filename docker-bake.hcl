@@ -99,5 +99,5 @@ target "custom" {
     context = "."
     dockerfile = "images/custom/Containerfile"
     target = "builder"
-    tags = tag("frappe_custom", "${CUSTOM_VERSION}")
+    tags = ["hieutrluu/frappe_custom:${CUSTOM_VERSION}"]
 }
