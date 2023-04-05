@@ -27,6 +27,7 @@ jobs:
           echo "CUSTOM_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
           echo "BUILD_TARGET=custom" >> $GITHUB_ENV
           echo "APPS_JSON_BASE64=$(echo ${APPS_JSON} | base64 -w 0)" >> $GITHUB_ENV
+          echo "::add-mask::$APPS_JSON_ENCODE64"
 
       - name: test env var
         run: |
