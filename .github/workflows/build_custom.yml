@@ -26,7 +26,9 @@ jobs:
         run:
           echo "CUSTOM_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
           echo "BUILD_TARGET=custom" >> $GITHUB_ENV
-          echo "APPS_JSON_BASE64=${APPS_JSON_BASE64}" >> $GITHUB_ENV    
+          echo "APPS_JSON_BASE64=${APPS_JSON_BASE64}" >> $GITHUB_ENV
+      - name: test env var
+        run: echo $CUSTOM_VERSION $BUILD_TARGET $APPS_JSON_BASE64
 
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v2
